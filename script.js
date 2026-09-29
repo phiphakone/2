@@ -23,7 +23,10 @@ navDots.forEach(dot => {
 });
 
 const revealElements = document.querySelectorAll('.card, .step, .complex-card, .code-panel, .student-table, .point, .thank-you, .compare-table-wrapper');
-revealElements.forEach(el => el.classList.add('reveal'));
+revealElements.forEach((el, i) => {
+  el.classList.add('reveal');
+  el.style.transitionDelay = Math.min(i % 4, 3) * 0.08 + 's';
+});
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
@@ -38,19 +41,15 @@ document.querySelectorAll('.tab').forEach(tab => {
   });
 });
 
-// Interchange Sort visualizer steps for [5,1,4,2,8]
 const steps = [
-  { label: 'Ban đầu', values: [5,1,4,2,8], highlight: [], sortedUpTo: -1, explanation: 'Mảng ban đầu: 5, 1, 4, 2, 8. Bắt đầu so sánh và đổi chỗ ngay khi sai thứ tự.' },
+  { label: 'Ban đầu', values: [5,1,4,2,8], highlight: [], sortedUpTo: -1, explanation: 'Mảng ban đầu: 5, 1, 4, 2, 8.' },
   { label: 'i=0, j=1', values: [1,5,4,2,8], highlight: [0,1], sortedUpTo: -1, explanation: 'a[0]=5 > a[1]=1 → đổi chỗ. Mảng: 1, 5, 4, 2, 8' },
-  { label: 'i=0, j=2', values: [1,5,4,2,8], highlight: [0,2], sortedUpTo: -1, explanation: 'a[0]=1 < a[2]=4 → không đổi.' },
-  { label: 'i=0, j=3', values: [1,5,4,2,8], highlight: [0,3], sortedUpTo: -1, explanation: 'a[0]=1 < a[3]=2 → không đổi.' },
-  { label: 'i=0, j=4', values: [1,5,4,2,8], highlight: [0,4], sortedUpTo: -1, explanation: 'a[0]=1 < a[4]=8 → không đổi. Kết thúc i=0.' },
+  { label: 'i=0, j=2–4', values: [1,5,4,2,8], highlight: [0], sortedUpTo: -1, explanation: 'a[0]=1 nhỏ hơn các phần tử còn lại → không đổi.' },
   { label: 'i=1, j=2', values: [1,4,5,2,8], highlight: [1,2], sortedUpTo: 0, explanation: 'a[1]=5 > a[2]=4 → đổi chỗ. Mảng: 1, 4, 5, 2, 8' },
   { label: 'i=1, j=3', values: [1,2,5,4,8], highlight: [1,3], sortedUpTo: 0, explanation: 'a[1]=4 > a[3]=2 → đổi chỗ. Mảng: 1, 2, 5, 4, 8' },
-  { label: 'i=1, j=4', values: [1,2,5,4,8], highlight: [1,4], sortedUpTo: 0, explanation: 'a[1]=2 < a[4]=8 → không đổi. Kết thúc i=1.' },
+  { label: 'i=1, j=4', values: [1,2,5,4,8], highlight: [1,4], sortedUpTo: 0, explanation: 'a[1]=2 < a[4]=8 → không đổi.' },
   { label: 'i=2, j=3', values: [1,2,4,5,8], highlight: [2,3], sortedUpTo: 1, explanation: 'a[2]=5 > a[3]=4 → đổi chỗ. Mảng: 1, 2, 4, 5, 8' },
-  { label: 'i=2, j=4', values: [1,2,4,5,8], highlight: [2,4], sortedUpTo: 1, explanation: 'a[2]=4 < a[4]=8 → không đổi. Kết thúc i=2.' },
-  { label: 'i=3, j=4', values: [1,2,4,5,8], highlight: [3,4], sortedUpTo: 2, explanation: 'a[3]=5 < a[4]=8 → không đổi.' },
+  { label: 'i=2–3', values: [1,2,4,5,8], highlight: [2,3,4], sortedUpTo: 2, explanation: 'Các cặp còn lại đúng thứ tự.' },
   { label: 'Hoàn tất', values: [1,2,4,5,8], highlight: [], sortedUpTo: 4, explanation: 'Mảng đã sắp xếp tăng dần: 1, 2, 4, 5, 8' }
 ];
 

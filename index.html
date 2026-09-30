@@ -3,9 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Phương pháp Đổi chỗ Trực tiếp – Interchange Sort (Sắp xếp đổi chỗ)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title>Phương pháp Đổi chỗ Trực tiếp – Interchange Sort</title>
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css"/>
 <link rel="stylesheet" href="polish.css"/>
@@ -21,8 +19,6 @@
 @keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,-25px) scale(1.08)}}
 .hero{position:relative;overflow:hidden}
 .cmt{color:#8aa0b8;font-style:italic;font-weight:400}
-.code-notes{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
-@media(max-width:700px){.code-notes{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -45,45 +41,48 @@
 <p class="eyebrow">Các phương pháp sắp xếp thông dụng</p>
 <h1>Phương pháp<br><span class="highlight">Đổi chỗ Trực tiếp</span></h1>
 <p class="subtitle">Interchange Sort (Sắp xếp đổi chỗ)</p>
-<p class="hero-desc">Bài thuyết trình nhóm – khoảng 10 người lần lượt trình bày</p>
-<div class="scroll-hint"><span>Cuộn xuống để bắt đầu</span><div class="mouse"></div></div>
+<p class="hero-desc">Bài thuyết trình nhóm</p>
 </div></section>
 <section class="section" id="idea"><div class="container">
 <h2>Từ ý tưởng</h2>
-<div class="script-block"><p>Ý tưởng cốt lõi rất thẳng: so sánh từng cặp phần tử và <strong>đổi chỗ ngay</strong> khi phát hiện chúng đứng sai thứ tự. Không cần chờ tìm phần tử nhỏ nhất như Selection Sort.</p>
-<p>Với mỗi vị trí i từ 0 đến n−2, ta so sánh a[i] lần lượt với tất cả phần tử phía sau. Chỉ cần a[i] lớn hơn a[j] là đổi chỗ ngay.</p>
-<p>Khác Selection Sort: Interchange Sort đổi chỗ ngay khi phát hiện, còn Selection Sort chờ tìm được min rồi mới đổi một lần.</p>
+<div class="script-block">
+<p>Ý tưởng rất thẳng: so sánh từng cặp và <strong>đổi chỗ ngay</strong> khi phát hiện đứng sai thứ tự. Không chờ tìm phần tử nhỏ nhất như Selection Sort.</p>
+<p>Với mỗi vị trí i, ta so sánh a của i với mọi phần tử phía sau. Chỉ cần a của i lớn hơn a của j là đổi ngay.</p>
 </div></div></section>
 <section class="section dark" id="when"><div class="container">
 <h2>Khi nào nên dùng / không nên dùng</h2>
-<div class="script-block"><p>Phù hợp khi học thuật toán cơ bản, mảng rất nhỏ, cần code ngắn. Không nên dùng dữ liệu lớn vì độ phức tạp <strong>O(n²)</strong>. Chữ <strong>O</strong> dùng để đo thời gian chạy. <strong>O(n²)</strong> nghĩa là số lần so sánh khoảng n × n. Ví dụ 100 phần tử ≈ 10.000 lần so sánh.</p></div>
+<div class="script-block">
+<p>Phù hợp khi học thuật toán cơ bản, mảng rất nhỏ, cần code ngắn dễ nhớ.</p>
+<p>Không nên dùng dữ liệu lớn vì <strong>O(n²)</strong>. Ví dụ một trăm phần tử khoảng mười nghìn lần so sánh. Cũng không phù hợp nếu cần ổn định, hoặc khi thao tác đổi chỗ rất tốn kém.</p>
+</div>
 <div class="suitable-grid">
-<div class="card good"><h4>✓ Phù hợp khi</h4><ul><li>Học thuật toán cơ bản</li><li>Mảng rất nhỏ</li><li>Cần code cực ngắn gọn</li></ul></div>
-<div class="card bad"><h4>✗ Không phù hợp khi</h4><ul><li>Dữ liệu lớn</li><li>Cần ổn định</li><li>Swap (đổi chỗ) tốn kém</li></ul></div>
+<div class="card good"><h4>✓ Phù hợp khi</h4><ul><li>Học thuật toán cơ bản</li><li>Mảng rất nhỏ</li><li>Cần code ngắn gọn</li></ul></div>
+<div class="card bad"><h4>✗ Không phù hợp khi</h4><ul><li>Dữ liệu lớn</li><li>Cần ổn định</li><li>Swap tốn kém</li></ul></div>
 </div></div></section>
 <section class="section" id="algo"><div class="container">
 <h2>Thuật toán chi tiết</h2>
 <div class="script-block">
-<p><strong>Bước 1:</strong> Cho i chạy từ 0 đến n−2.</p>
-<p><strong>Bước 2:</strong> Cho j chạy từ i+1 đến n−1 – so sánh a[i] với mọi phần tử đứng sau.</p>
-<p><strong>Bước 3:</strong> Nếu a[i] > a[j], đổi chỗ ngay a[i] ↔ a[j].</p>
-<p><strong>Bước 4:</strong> Lặp đến hết. Mảng đã sắp tăng dần.</p>
-</div>
-<div class="steps">
-<div class="step"><div class="step-num">1</div><div class="step-content"><h4>Vòng ngoài</h4><p>i: 0 → n−2</p></div></div>
-<div class="step"><div class="step-num">2</div><div class="step-content"><h4>Vòng trong</h4><p>j: i+1 → n−1</p></div></div>
-<div class="step"><div class="step-num">3</div><div class="step-content"><h4>So sánh & Đổi</h4><p>a[i] > a[j] → đổi ngay</p></div></div>
-<div class="step"><div class="step-num">4</div><div class="step-content"><h4>Kết thúc</h4><p>Mảng đã sắp tăng dần</p></div></div>
+<p><strong>Bước 1:</strong> i chạy từ 0 đến n trừ 2.</p>
+<p><strong>Bước 2:</strong> j chạy từ i cộng 1 đến n trừ 1.</p>
+<p><strong>Bước 3:</strong> nếu a của i lớn hơn a của j thì đổi chỗ ngay.</p>
+<p><strong>Bước 4:</strong> lặp đến hết. Mảng đã sắp tăng dần.</p>
 </div></div></section>
 <section class="section dark" id="visual"><div class="container">
 <h2>Sơ đồ minh họa từng bước</h2>
-<div class="script-block"><p>Minh họa với mảng <strong>5, 1, 4, 2, 8</strong>. i=0: đổi 5 với 1. i=1: đổi dần để số nhỏ lên trước. Cuối cùng: 1,2,4,5,8.</p></div>
+<div class="script-block">
+<p>Ví dụ mảng <strong>5, 1, 4, 2, 8</strong>.</p>
+<p>i bằng 0, giá trị 5 so với 1 thì đổi thành 1, 5, 4, 2, 8. i bằng 1 tiếp tục đổi dần. Cuối cùng được <strong>1, 2, 4, 5, 8</strong>.</p>
+</div>
 <div class="visualizer"><div class="array-state" id="arrayState"></div>
 <div class="visual-controls"><button id="prevStep" class="btn">← Trước</button><span class="step-label" id="stepLabel">Ban đầu</span><button id="nextStep" class="btn">Tiếp →</button></div>
 <div class="step-explanation" id="stepExplanation"></div></div>
 </div></section>
 <section class="section" id="code"><div class="container">
 <h2>Mã giả & Cài đặt C++</h2>
+<div class="script-block">
+<p>Hai vòng for lồng nhau. Bên trong chỉ một câu if. Nếu a của i lớn hơn a của j thì đổi chỗ.</p>
+<p>Trong C++ dùng biến tạm <strong>temp</strong>: cất a của i vào temp, đưa a của j lên i, rồi đưa temp ra sau.</p>
+</div>
 <div class="code-tabs"><button class="tab active" data-tab="pseudo">Mã giả</button><button class="tab" data-tab="cpp">C++</button></div>
 <div class="code-panel active" id="pseudo"><pre><code>procedure InterchangeSort(a[0..n−1])   <span class="cmt">// bắt đầu thuật toán đổi chỗ</span>
   for i ← 0 to n−2 do                  <span class="cmt">// vòng ngoài: vị trí đang xét</span>
@@ -105,42 +104,23 @@ end procedure</code></pre></div>
     }
   }
 }</code></pre></div>
-<div class="code-notes">
-<div class="note-item"><strong>procedure / hàm:</strong> bắt đầu Interchange Sort</div>
-<div class="note-item"><strong>for i:</strong> lần lượt cố định từng vị trí</div>
-<div class="note-item"><strong>for j:</strong> so sánh a[i] với mọi phần tử phía sau</div>
-<div class="note-item"><strong>if a[i] > a[j]:</strong> đứng sai thứ tự thì đổi ngay</div>
-<div class="note-item"><strong>temp:</strong> biến tạm để đổi 2 giá trị trong C++</div>
-<div class="note-item"><strong>Độ phức tạp:</strong> O(n²) — số bước ≈ n × n</div>
-</div></div></section>
+</div></section>
 <section class="section dark" id="example"><div class="container">
 <h2>Mô hình ví dụ – Sinh viên</h2>
-<div class="script-block"><p>Sắp xếp sinh viên theo điểm tăng dần: Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0.</p></div>
-<div class="student-table"><div class="table-header"><span>Mã SV</span><span>Họ tên</span><span>Điểm TB</span></div>
-<div class="table-row before"><span>SV001</span><span>Nguyễn Văn A</span><span class="score">7.5</span></div>
-<div class="table-row before"><span>SV002</span><span>Trần Thị B</span><span class="score">8.2</span></div>
-<div class="table-row before"><span>SV003</span><span>Lê Văn C</span><span class="score">6.8</span></div>
-<div class="table-row before"><span>SV004</span><span>Phạm Thị D</span><span class="score">9.0</span></div></div>
-<div class="arrow-down">↓ Interchange Sort theo điểm ↓</div>
-<div class="student-table sorted"><div class="table-header"><span>#</span><span>Họ tên</span><span>Điểm TB</span></div>
-<div class="table-row after"><span>1</span><span>Lê Văn C</span><span class="score">6.8</span></div>
-<div class="table-row after"><span>2</span><span>Nguyễn Văn A</span><span class="score">7.5</span></div>
-<div class="table-row after"><span>3</span><span>Trần Thị B</span><span class="score">8.2</span></div>
-<div class="table-row after"><span>4</span><span>Phạm Thị D</span><span class="score">9.0</span></div></div>
+<div class="script-block"><p>Sắp sinh viên theo điểm tăng dần. Kết quả: <strong>Lê Văn C 6.8 → Nguyễn Văn A 7.5 → Trần Thị B 8.2 → Phạm Thị D 9.0</strong>.</p></div>
 </div></section>
 <section class="section" id="pros"><div class="container">
 <h2>Ưu điểm</h2>
-<div class="script-block"><p>Dễ hiểu, code ngắn, sắp xếp tại chỗ (in-place), phù hợp giảng dạy.</p></div>
+<div class="script-block"><p>Rất dễ hiểu, code ngắn, sắp tại chỗ không cần bộ nhớ phụ, phù hợp giảng dạy.</p></div>
 </div></section>
 <section class="section dark" id="cons"><div class="container">
 <h2>Nhược điểm</h2>
-<div class="script-block"><p><strong>O(n²)</strong> — số bước ≈ n × n, đổi chỗ nhiều, không ổn định, ít dùng thực tế.</p></div>
+<div class="script-block"><p><strong>O(n²)</strong> nên chậm khi dữ liệu lớn. Số lần đổi chỗ thường nhiều hơn Selection Sort. Không ổn định. Ít dùng trong hệ thống thật.</p></div>
 </div></section>
 <section class="section conclusion" id="conclusion"><div class="container">
 <h2>Kết luận</h2>
-<div class="script-block"><p>Interchange Sort đơn giản nhưng chậm với dữ liệu lớn vì <strong>O(n²)</strong>. Nhóm em xin cảm ơn thầy cô và các bạn đã lắng nghe.</p></div>
-<div class="thank-you"><h3>Cảm ơn đã lắng nghe!</h3>
-<p>Phương pháp Đổi chỗ Trực tiếp – Interchange Sort</p></div>
+<div class="script-block"><p>Interchange Sort đơn giản nhưng không hiệu quả với dữ liệu lớn. Nên học để hiểu cơ chế đổi chỗ. Nhóm em xin cảm ơn thầy cô và các bạn.</p></div>
+<div class="thank-you"><h3>Cảm ơn đã lắng nghe!</h3></div>
 </div></section>
 <script src="script.js"></script>
 </body></html>
